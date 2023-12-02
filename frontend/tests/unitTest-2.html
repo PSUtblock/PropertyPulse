@@ -1,0 +1,74 @@
+<!--Travis Block
+For this unit test I am testing a component with mock data to see if I can add a filter to find
+particular building and then I can use it to get to a particular Report faster.
+
+Unit Test 2 Filtering Search
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unit Testing</title>
+</head>
+<body>
+
+<div id="root"></div>
+
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script crossorigin src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+
+
+
+<script type="text/babel">
+const { useState, useEffect} = React;
+
+function BuildingFilter() {
+
+  const [userInput, setUserInput] = useState('');
+  const [propertyAcronyms, setPropertyAcronyms] = useState(["AB","ASRC","CH","KMC","FMH"]);
+  const [result, setResult] = useState(null);
+
+  const handleInput = (e) =>{
+    setUserInput(e.target.value);
+  };
+
+  const handleCheck = () => {
+    console.log("i'm in");
+    if (propertyAcronyms.includes(userInput))
+    {
+      setResult(userInput)
+    }
+  }
+
+    return (
+      <div>
+      <div className="p-2 w-64 border-2 border-black border-double border-slate-700 rounded-md text-center">
+        <label htmlFor="buildingSearch p-2">Search: </label>
+        <input className="border-2 border-black" type="text" onChange={handleInput} id="buildingSearch" name="buildingSearch"/>
+        <br/>
+        <button className="mt-3 p-3 bg-emerald-700 border-radius" onClick={handleCheck}>Check</button>
+      </div>
+      <div className="p-2 w-64 border-2 border-double border-slate-700 rounded-md text-center">
+        <p>{result}</p>
+      </div>
+      </div>
+    );
+  }
+
+  // Create a root using createRoot
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+
+  // Render the React component into the root
+  root.render(
+    <React.StrictMode>
+      <BuildingFilter />
+    </React.StrictMode>
+  );
+</script>
+
+</body>
+</html>

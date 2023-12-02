@@ -1,0 +1,74 @@
+<!--Travis Block
+For Unit Testing, I just wanted to make the process simple for me to understand because If i jumped into 
+using some tool set I won't feel like I know what is actually going on. Using a Single html file with CDN
+lets me to the most basic of a unit test and where I can then just pull the component into where i need it
+without that need to incorporate it into the actual project. Just a standalone snippet!
+
+Unit Test 1 Testing Weather API
+A simple connection to the weather API I am using for a component to share the current weather on campus (Portland)
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unit Testing</title>
+</head>
+<body>
+
+<div id="root"></div>
+
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script crossorigin src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+
+
+
+<script type="text/babel">
+const { useState, useEffect} = React;
+
+function WeatherChecker() {
+
+  const [weather, setWeather] = useState();
+
+  useEffect(() => {
+  async function fetchData() {
+    try{
+      const response = await fetch('https://api.open-meteo.com/v1/forecast?latitude=45.5234&longitude=-122.6762&current=temperature_2m,weather_code&temperature_unit=fahrenheit&timezone=America%2FLos_Angeles&forecast_days=1')
+    
+      if(!response.ok) {
+        throw new Error('Network Request failed');
+      }
+      const output = await response.json();
+      console.log(output);
+      setWeather(output.current.temperature_2m);
+    } catch (error) {
+        console.error('There was a problem getting the weather :(',error);
+        setWeather("Error");  
+    }
+  }
+  fetchData();
+}, []);
+
+    return (
+      <div className="p-2 w-64 border-2 border-double border-slate-700 rounded-md text-center">
+        <p>Campus Temperature: {weather + " F"}</p>
+      </div>
+    );
+  }
+
+  // Create a root using createRoot
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+
+  // Render the React component into the root
+  root.render(
+    <React.StrictMode>
+      <WeatherChecker />
+    </React.StrictMode>
+  );
+</script>
+
+</body>
+</html>
