@@ -62,7 +62,7 @@ FilterBox.tsx:
 
 - Perfect as-is, once we're able to filter out returned data and display it we'll be golden. User options save to local storage.
 
-Mainmap.tsx:
+Mainmap.tsx & HeatmapComponent.tsx:
 
 - Has a lot of functionality tied "below", other than just displaying the map. Has the buildings saved, will call building component to display information once tied to a interactive interface.
 - The map was far too large for the website, so I tried shrinking it, and then adding a scroll bar (which is currently implemented). I feel like a click/zoom/drag will be the way to go, but that will require the d3 library, which is already installed. I know Ronak mentioned experience with is, so I will leave that up to you guys! I'd rather have the one person who knows it really well to tackle that project, since React and D3 both vie for the DOM.
